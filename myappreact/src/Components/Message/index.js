@@ -1,5 +1,7 @@
+// export const Message = () => <h4>Message Text</h4>;
+
 export function Message(props) {
     return (
-        <h4 className="Message-Text">{props.author}: {props.text}</h4>
+        <h4 className="Message-Text">Message Text, {props.text}</h4>
     );
 };
