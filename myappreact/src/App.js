@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Message } from './Components/Message';
 // import { Counter } from './Components/Counter';
@@ -8,6 +8,7 @@ import { AUTHORS } from './utils/constants';
 
 function App() {
   const [messageList, setMessageList] = useState([]);
+  const messagesEnd = useRef();
 
   const handleMessageClick = () => {
 
@@ -23,6 +24,8 @@ function App() {
   };
 
   useEffect(() => {
+    messagesEnd.current?.scrollIntoView();
+
     let timeout;
     if (messageList[messageList.length - 1]?.author === AUTHORS.ME) {
       timeout = setTimeout(() => {
@@ -44,14 +47,16 @@ function App() {
     <div className="App">
       <header className="App-header">
         My React App
-        {messageList.map((message) => (
-          <Message 
-            text={message.text} 
-            author={message.author} 
-            onMessageClick={handleMessageClick} 
-          />
-        ))}
-        {/* <Counter /> */}
+        <div className="App-content">
+          {messageList.map((message) => (
+            <Message 
+              text={message.text} 
+              author={message.author} 
+              onMessageClick={handleMessageClick} 
+            />
+          ))}
+          <div ref={messagesEnd}></div>
+        </div>
         <Form onSubmit={handleAddMessage} />
       </header>
     </div>
