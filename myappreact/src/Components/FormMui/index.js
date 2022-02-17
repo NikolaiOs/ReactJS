@@ -1,35 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { TextField, Button } from "@mui/material";   
+import { TextField } from "@mui/material"; 
+import { ButtonMui } from "../ButtonMui";
 import "./style.css";
-import { useTheme } from "@mui/material/styles";
-
-function ButtonForm() {
-    const theme = useTheme();
-
-    function getFocus() {
-      document.getElementById("outlined-basic").focus();
-    };
-  
-    return (
-      <Button
-        onClick={getFocus}
-        type="submit"
-        variant="outlined"
-        style={{
-          backgroundColor: theme.palette.primary.main,
-          borderColor: theme.palette.secondary.main,
-          color: "black"
-        }}
-      >
-        Отправить
-      </Button>
-    );
-}
 
 export const FormMui = ({ onSubmit }) => {
     const [value, setValue] = useState("");
     const textField = useRef();
-
+    
     const handleChange = (event) => {
         setValue(event.target.value);
     };
@@ -55,7 +32,7 @@ export const FormMui = ({ onSubmit }) => {
             onChange={handleChange}
             inputRef={textField}
           />
-          <ButtonForm />
+          <ButtonMui />
         </form>
     );
 };
