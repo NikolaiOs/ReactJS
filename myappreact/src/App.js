@@ -1,9 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { Message } from './Components/Message';
-// import { Counter } from './Components/Counter';
-import { Form } from './Components/Form';
+import { FormMui } from './Components/FormMui';
 import { AUTHORS } from './utils/constants';
+import { СhatMui } from './Components/ListMui';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#FF9800",
+    },
+    secondary: {
+      main: "#0098FF",
+    },
+  },
+});
 
 
 function App() {
@@ -19,7 +32,7 @@ function App() {
       text,
       author: AUTHORS.ME,
     };
-
+    
     setMessageList((prevMessageList) => [...prevMessageList, newMsg]);
   };
 
@@ -47,9 +60,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         My React App
+        <СhatMui />
         <div className="App-content">
           {messageList.map((message) => (
             <Message 
+              key={Math.random()}
               text={message.text} 
               author={message.author} 
               onMessageClick={handleMessageClick} 
@@ -57,7 +72,9 @@ function App() {
           ))}
           <div ref={messagesEnd}></div>
         </div>
-        <Form onSubmit={handleAddMessage} />
+        <ThemeProvider theme={theme} >
+          <FormMui onSubmit={handleAddMessage} />
+        </ThemeProvider>
       </header>
     </div>
   );
