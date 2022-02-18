@@ -6,11 +6,6 @@ import "./style.css";
 export const FormMui = ({ onSubmit }) => {
     const [value, setValue] = useState("");
     const textField = useRef(); 
-    
-    const inputEl = textField;
-    const onButtonClick = () => {
-      inputEl.current?.focus();
-    };
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -20,6 +15,7 @@ export const FormMui = ({ onSubmit }) => {
         e.preventDefault();
         onSubmit(value);
         setValue("");
+        textField.current?.focus();
     };
 
     useEffect(() => {
@@ -37,7 +33,7 @@ export const FormMui = ({ onSubmit }) => {
             onChange={handleChange}
             inputRef={textField}
           />
-          <ButtonMui onClick={onButtonClick()}/>
+          <ButtonMui />
         </form>
     );
 };
