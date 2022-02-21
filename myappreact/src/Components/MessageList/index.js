@@ -6,4 +6,4 @@ export const MessageList = ({ messages }) => {
       <Message text={message.text} author={message.athuor} />
     </div>
   ));
-};
+}; 
