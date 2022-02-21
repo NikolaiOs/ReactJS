@@ -1,12 +1,16 @@
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { ThemeContext } from "../../utils/ThemeContext";
 import { Chat } from "../Chat";
 import { СhatMui } from "../ListMui";
+import { Profile } from "../Profile";
 
 const Home = () => <h2>Home page</h2>;
-const Profile = () => <h2>Profile page</h2>;
 
 export const Router = () => {
+    const [messageColor, setMessageColor] = useState("forestgreen");
     return (
+        <ThemeContext.Provider value={{messageColor, setMessageColor}}>
         <BrowserRouter>
 
             <header>
@@ -41,5 +45,6 @@ export const Router = () => {
             </Routes>
             
         </BrowserRouter>
+        </ThemeContext.Provider>
     );
 };

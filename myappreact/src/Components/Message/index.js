@@ -1,5 +1,14 @@
-export function Message(props) {
+import { useContext } from "react";
+import { ThemeContext } from "../../utils/ThemeContext";
+
+
+export const Message = ({ text, author }) => {
+    const { messageColor } = useContext(ThemeContext);
     return (
-        <h4 className="Message-Text">{props.author}: {props.text}</h4>
+      <div>
+        <span style={{ color: messageColor }} className="Message-Text">
+          {author}: {text}
+        </span>
+      </div>
     );
 };

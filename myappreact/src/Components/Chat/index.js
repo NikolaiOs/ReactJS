@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
-import { Message } from '../Message';
+import { MessageList } from '../MessageList';
 import { FormMui } from '../FormMui';
 import { AUTHORS } from '../../utils/constants';
-import '../../App.css'
+import '../../App.css';
 import { Navigate, useParams } from 'react-router-dom';
-import { СhatMui } from '../ListMui'
+import { СhatMui } from '../ListMui';
 
 const theme = createTheme({
   palette: {
@@ -32,11 +32,8 @@ export function Chat() {
       chat1: [],
       chat2: [],
   });
+
   const messagesEnd = useRef();
-
-  const handleMessageClick = () => {
-
-  };
 
   const handleAddMessage = (text) => {
     sendMessage(text, AUTHORS.ME);
@@ -46,6 +43,7 @@ export function Chat() {
     const newMsg = {
       text,
       author,
+      id: `msg-${Date.now()}`,
     };
     
     setMessageList((prevMessageList) => ({
@@ -74,7 +72,7 @@ export function Chat() {
 
   if (!messageList[chatId]) {
     return <Navigate to="chats" replace/>
-    };
+  };
 
   return (
     <div className="App">
@@ -82,14 +80,7 @@ export function Chat() {
         My React App
         <СhatMui />
         <div className="App-content">
-          {messageList[chatId].map((message) => (
-            <Message 
-              key={Math.random()}
-              text={message.text} 
-              author={message.author} 
-              onMessageClick={handleMessageClick} 
-            />
-          ))}
+          <MessageList messages={messageList[chatId]} />
           <div ref={messagesEnd}></div>
         </div>
         <ThemeProvider theme={theme} >
