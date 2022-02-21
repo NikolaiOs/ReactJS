@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 
 export function ButtonMui() {
     const theme = useTheme();
-    
+
     return (
       <Button
         type="submit"
@@ -17,4 +17,4 @@ export function ButtonMui() {
         Отправить
       </Button>
     );
-}
+};
