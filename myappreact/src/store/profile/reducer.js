@@ -1,9 +1,10 @@
 import { CHANGE_SHOW_NAME } from "./actions";
-import { CHANGE_CHECK_BOX } from "./actions"
+import { CHANGE_CHECK_BOX } from "./actions";
+import { CHANGE_NAME } from "./actions";
 
 const initialState = {
     name: 'Default',
-    showName: false
+    showName: true
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -18,7 +19,12 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 showName: !state.showName,
-                checked: !state.checked,
+            };
+        }
+        case CHANGE_NAME: {
+            return {
+                ...state,
+                name: action.name,
             };
         }
         default: 

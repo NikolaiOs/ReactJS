@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
 import { Chat } from "../Chat";
 import { СhatMui } from "../ListMui";
-import { Profile } from "../Profile";
+import ConnectedProfile, { Profile } from "../Profile";
+import { addChat, deleteChat } from "../../store/chats/actions";
 
 const Home = () => <h2>Home page</h2>;
 
@@ -26,8 +28,11 @@ const initialMessages = initialChats.reduce((acc, el) => {
 export const Router = () => {
     const [messageColor, setMessageColor] = useState("forestgreen");
 
-    const [chatList, setChatList] = useState(initialChats);
+    // const [chatList, setChatList] = useState(initialChats);
     const [messages, setMessages] = useState(initialMessages);
+
+    const chatList = useSelector(state => state.chats);
+    const dispatch = useDispatch();
 
     const handleAddMessage = (chatId, newMsg) => {
         setMessages((prevMessageList) => ({
@@ -35,6 +40,29 @@ export const Router = () => {
     
             [chatId]: [...prevMessageList[chatId], newMsg],
         }));
+    };
+
+    const handleAddChat = (newChatName) => {
+        const newId = `chat-${Date.now()}`;
+        
+
+        dispatch(addChat(newId, newChatName));
+        // setChatList((prevChatList) => [...prevChatList, newChat]);
+        setMessages((prevMessages) => ({
+            ...prevMessages,
+            [newId]: []
+        }));
+    };
+
+    const handleDeleteChat = (idToDelete) => {
+        dispatch(deleteChat(idToDelete));
+        // setChatList(prevChatList => prevChatList.filter(chat => chat.id !== idToDelete));
+        setMessages((prevMessages) => {
+          const newMsgs = { ...prevMessages };
+    
+          delete newMsgs[idToDelete];
+          return newMsgs;
+        });
     };
 
     return (
@@ -65,8 +93,8 @@ export const Router = () => {
 
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="chats" element={<СhatMui chats={chatList} />}>
+                <Route path="profile" element={<ConnectedProfile />} />
+                <Route path="chats" element={<СhatMui onDeleteChat={handleDeleteChat} onAddChat={handleAddChat} chats={chatList} />}>
                     <Route path=":chatId" element={<Chat messages={messages} addMessage={handleAddMessage}/>} />
                 </Route>
                 <Route path="*" element={<h2>404</h2>} />
