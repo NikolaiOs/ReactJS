@@ -33,11 +33,18 @@ export const Router = () => {
                             Chats
                         </NavLink>
                     </li>
+
+                    <li>
+                        <NavLink to="/articles" style={({ isActive }) => ({ color: isActive ? "green" : "gray"})}>
+                            Articles
+                        </NavLink>
+                    </li>
                 </ul>
             </header>
 
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="articles" element={} />
                 <Route path="profile" element={<ConnectedProfile />} />
                 <Route path="chats" element={<СhatMui />}>
                     <Route path=":chatId" element={<Chat />} />
