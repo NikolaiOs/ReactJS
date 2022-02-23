@@ -6,40 +6,22 @@ import { Chat } from "../Chat";
 import { СhatMui } from "../ListMui";
 import ConnectedProfile, { Profile } from "../Profile";
 import { addChat, deleteChat } from "../../store/chats/actions";
+import { selectChats } from "../../store/chats/selectors";
+import { selectMessages } from "../../store/messages/selectors";
+import { addMessage } from "../../store/messages/actions";
 
 const Home = () => <h2>Home page</h2>;
-
-const initialChats = [
-    {
-        name: 'chat 1',
-        id: 'chat1'
-    },
-    {
-        name: 'chat 2',
-        id: 'chat2'
-    }
-];
-
-const initialMessages = initialChats.reduce((acc, el) => {
-    acc[el.id] = [];
-    return acc;
-}, {});
 
 export const Router = () => {
     const [messageColor, setMessageColor] = useState("forestgreen");
 
-    // const [chatList, setChatList] = useState(initialChats);
-    const [messages, setMessages] = useState(initialMessages);
+    const messages = useSelector(selectMessages);
 
-    const chatList = useSelector(state => state.chats);
+    const chatList = useSelector(selectChats);
     const dispatch = useDispatch();
 
     const handleAddMessage = (chatId, newMsg) => {
-        setMessages((prevMessageList) => ({
-            ...prevMessageList,
-    
-            [chatId]: [...prevMessageList[chatId], newMsg],
-        }));
+        dispatch(addMessage(chatId, newMsg));
     };
 
     const handleAddChat = (newChatName) => {
@@ -47,22 +29,10 @@ export const Router = () => {
         
 
         dispatch(addChat(newId, newChatName));
-        // setChatList((prevChatList) => [...prevChatList, newChat]);
-        setMessages((prevMessages) => ({
-            ...prevMessages,
-            [newId]: []
-        }));
     };
 
     const handleDeleteChat = (idToDelete) => {
         dispatch(deleteChat(idToDelete));
-        // setChatList(prevChatList => prevChatList.filter(chat => chat.id !== idToDelete));
-        setMessages((prevMessages) => {
-          const newMsgs = { ...prevMessages };
-    
-          delete newMsgs[idToDelete];
-          return newMsgs;
-        });
     };
 
     return (

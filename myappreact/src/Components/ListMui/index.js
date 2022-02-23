@@ -10,7 +10,7 @@ export const СhatMui = ({ chats, onAddChat, onDeleteChat }) => (
         <Outlet />
         <List className="App-chatMui">
             {chats.map((chat) => (
-                <ChatItem  chat={chat} onDeleteChat={onDeleteChat} />
+                <ChatItem key={chat.id} chat={chat} onDeleteChat={onDeleteChat} />
             ))}
         </List>
     </>
