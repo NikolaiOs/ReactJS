@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { MessageList } from '../MessageList';
@@ -6,6 +6,9 @@ import { FormMui } from '../FormMui';
 import { AUTHORS } from '../../utils/constants';
 import '../../App.css';
 import { Navigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMessages } from '../../store/messages/selectors';
+import { addMessageWithThunk } from '../../store/messages/actions';
 
 const theme = createTheme({
   palette: {
@@ -18,9 +21,11 @@ const theme = createTheme({
   },
 });
 
-export function Chat({ messages, addMessage}) {
-  const params = useParams();
-  const { chatId } = params;
+export function Chat() {
+  const { chatId } = useParams();
+
+  const messages = useSelector(selectMessages);
+  const dispatch = useDispatch();
 
   const messagesEnd = useRef();
 
@@ -35,24 +40,12 @@ export function Chat({ messages, addMessage}) {
       id: `msg-${Date.now()}`,
     };
     
-    addMessage(chatId, newMsg);
+    dispatch(addMessageWithThunk(chatId, newMsg));
   };
 
   useEffect(() => {
     messagesEnd.current?.scrollIntoView();
-
-    let timeout;
-    if (
-      messages[chatId]?.[messages[chatId]?.length - 1]?.author === AUTHORS.ME
-        ) {
-            timeout = setTimeout(() => {
-                sendMessage("01 00 01", AUTHORS.BOT);
-            }, 1500);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
+    
   }, [messages]);
 
   if (!messages[chatId]) {

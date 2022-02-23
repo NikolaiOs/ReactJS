@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { changeCheckBox, changeName, changeShowName } from "../../store/profile/actions";
 import { ThemeContext } from "../../utils/ThemeContext";
 import { FormMui } from "../FormMui";
@@ -9,10 +9,6 @@ export const Profile = () => {
     const { setMessageColor } = useContext(ThemeContext);
 
     const dispatch = useDispatch();
-    // const data =  useSelector((state) => state);
-
-    const showName = useSelector(selectShowName);
-    const name = useSelector(selectName);
 
     const handleChangeShowName = () => {
         dispatch(changeShowName);
@@ -39,9 +35,6 @@ export const Profile = () => {
             <div>
                 <input type="checkbox" onClick={handleChangeCheckBox} />
 
-
-
-                {/* {data.showName && <span>{data.name}</span>} */}
                 <button onClick={handleChangeShowName} >Change show name</button>
             </div>
             <FormMui onSubmit={handleChangeName} />
