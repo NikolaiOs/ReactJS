@@ -6,7 +6,6 @@ import { FormMui } from '../FormMui';
 import { AUTHORS } from '../../utils/constants';
 import '../../App.css';
 import { Navigate, useParams } from 'react-router-dom';
-import { СhatMui } from '../ListMui';
 
 const theme = createTheme({
   palette: {
@@ -19,19 +18,9 @@ const theme = createTheme({
   },
 });
 
-const chats = [{ id: "chat1" }];
-const messages = {
-    chat1: [],
-};
-
-export function Chat() {
+export function Chat({ messages, addMessage}) {
   const params = useParams();
   const { chatId } = params;
-
-  const [messageList, setMessageList] = useState({
-      chat1: [],
-      chat2: [],
-  });
 
   const messagesEnd = useRef();
 
@@ -46,11 +35,7 @@ export function Chat() {
       id: `msg-${Date.now()}`,
     };
     
-    setMessageList((prevMessageList) => ({
-        ...prevMessageList,
-
-        [chatId]: [...prevMessageList[chatId], newMsg],
-        }));
+    addMessage(chatId, newMsg);
   };
 
   useEffect(() => {
@@ -58,7 +43,7 @@ export function Chat() {
 
     let timeout;
     if (
-        messageList[chatId]?.[messageList[chatId]?.length - 1]?.author === AUTHORS.ME
+      messages[chatId]?.[messages[chatId]?.length - 1]?.author === AUTHORS.ME
         ) {
             timeout = setTimeout(() => {
                 sendMessage("01 00 01", AUTHORS.BOT);
@@ -68,9 +53,9 @@ export function Chat() {
     return () => {
       clearTimeout(timeout);
     };
-  }, [messageList]);
+  }, [messages]);
 
-  if (!messageList[chatId]) {
+  if (!messages[chatId]) {
     return <Navigate to="chats" replace/>
   };
 
@@ -78,9 +63,8 @@ export function Chat() {
     <div className="App">
       <header className="App-header">
         My React App
-        <СhatMui />
         <div className="App-content">
-          <MessageList messages={messageList[chatId]} />
+          <MessageList messages={messages[chatId]} />
           <div ref={messagesEnd}></div>
         </div>
         <ThemeProvider theme={theme} >
