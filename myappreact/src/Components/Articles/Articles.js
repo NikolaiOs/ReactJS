@@ -33,7 +33,7 @@ export const Articles = () => {
             ) : (
                     <ul>
                         {articles.map((art) => (
-                            <li key={art.id}>{art.title}</li>
+                            <li key={Math.random()}>{art.text}</li>
                         ))}
                     </ul>
                 )
@@ -41,3 +41,48 @@ export const Articles = () => {
         </>
     )
 };
+
+
+
+
+
+
+
+
+// export const Articles = () => {
+
+//     const dispatch = useDispatch();
+//     const error = useSelector(selectError);
+//     const isLoading = useSelector(selectArticlesLoading);
+//     const articles = useSelector(selectArticles);
+
+//     const getData = async () => {
+//         dispatch(getArticles());
+//     };
+
+//     useEffect(() => {
+
+//         getData();
+
+//     }, []);
+
+//     return (
+//         <>
+//             <h3>Articles</h3>
+//             <button onClick={getData}>Обновить</button>
+
+//             {error && <h5>Error</h5>}
+
+//             {isLoading ? (
+//                 <CircularProgress />
+//             ) : (
+//                     <ul>
+//                         {articles.map((art) => (
+//                             <li key={art.id}>{art.title}</li>
+//                         ))}
+//                     </ul>
+//                 )
+//             }
+//         </>
+//     )
+// };

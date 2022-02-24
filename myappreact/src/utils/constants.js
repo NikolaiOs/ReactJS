@@ -3,9 +3,9 @@ export const AUTHORS = {
     BOT: "bot",
 };
 
-export const apiUrl = "https://api.spaceflightnewsapi.net/v3/articles";
+// export const apiUrl = "https://api.spaceflightnewsapi.net/v3/articles";
 // export const apiUrl = "https://api.spaceflightnewsapi.net/v3/article";
-// export const apiUrl = "https://i.redd.it/ujb4klpz4d071.jpg";
+export const apiUrl = "https://cat-fact.herokuapp.com/facts";
 
 export const FETCH_STATUSES = {
     IDLE: 0,
