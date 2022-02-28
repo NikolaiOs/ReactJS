@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
+import { Articles } from "../Articles/Articles";
 import { Chat } from "../Chat";
 import { СhatMui } from "../ListMui";
 import ConnectedProfile from "../Profile";
@@ -44,7 +45,7 @@ export const Router = () => {
 
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="articles" element={} />
+                <Route path="articles" element={<Articles />} />
                 <Route path="profile" element={<ConnectedProfile />} />
                 <Route path="chats" element={<СhatMui />}>
                     <Route path=":chatId" element={<Chat />} />
