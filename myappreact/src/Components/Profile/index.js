@@ -4,6 +4,7 @@ import { changeCheckBox, changeName, changeShowName } from "../../store/profile/
 import { ThemeContext } from "../../utils/ThemeContext";
 import { FormMui } from "../FormMui";
 import { selectName, selectShowName } from "../../store/profile/selectors";
+import { logout } from "../../services/firebase";
 
 export const Profile = () => {
     const { setMessageColor } = useContext(ThemeContext);
@@ -57,10 +58,21 @@ export const ProfileToConnect = ({ showName, name, setName, setShowName }) => {
     const handleChangeName = (text) => {
       setName(text);
     };
+
+    const handleLogout = async () => {
+        try {
+          await logout();
+        } catch (e) {
+          console.warn(e);
+        }
+    };
   
     return (
       <>
         <h3>Profile</h3>
+        <div>
+            <button onClick={handleLogout} >LOGOUT</button>
+        </div>
         <div>
             <button onClick={handleClick} >Change theme</button>
         </div>

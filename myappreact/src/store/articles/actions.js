@@ -28,8 +28,8 @@ export const getArticles = () => async (dispatch) => {
         }
         const result = await response.json();
         dispatch(getArticlesSuccess(result));
-      } catch (err) {
-            dispatch(getArticlesFailure(err));
-            console.warn(err);
-      }
-  };
+    } catch (err) {
+        dispatch(getArticlesFailure(err));
+        console.warn(err);
+    }
+};
